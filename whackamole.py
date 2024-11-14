@@ -1,4 +1,5 @@
 import pygame
+import random
 
 HEIGHT = 512
 WIDTH = 640
@@ -13,22 +14,34 @@ def main():
         screen = pygame.display.set_mode((640, 512))
         clock = pygame.time.Clock()
 
+        # Initialize game
+        screen.fill("light green")
+        draw_lines(screen)
+        draw_mole(screen, mole_image, 0, 0)
 
 
+        mole_square = (0, 0)
         running = True
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+
+
+
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    print(event.pos)
+                    x, y = event.pos
+                    # boxes are 32x32
+                    row = x // 32
+                    col = y // 32
 
-            # Initialize game
-            screen.fill("light green")
-            draw_lines(screen)
-            draw_mole(screen, mole_image, 0, 0)
-
-
+                    if (row, col) == mole_square:
+                        screen.fill("light green")
+                        draw_lines(screen)
+                        # Add extra to range since it's exclusive
+                        mole_square = (random.randrange(0, 21), random.randrange(0, 17))
+                        draw_mole(screen, mole_image, mole_square[0] * 32, mole_square[1] * 32)
 
 
             # Update the screen
@@ -50,6 +63,7 @@ def draw_lines(screen):
     for _ in range(16):
         pygame.draw.line(screen, "white", (0, j), (WIDTH, j))
         j += 32
+
 
 def draw_mole(screen, mole_image, x, y):
     screen.blit(mole_image, mole_image.get_rect(topleft=(x, y)))
