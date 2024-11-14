@@ -39,8 +39,7 @@ def main():
                     if (row, col) == mole_square:
                         screen.fill("light green")
                         draw_lines(screen)
-                        # Add extra to range since it's exclusive
-                        mole_square = (random.randrange(0, 21), random.randrange(0, 17))
+                        mole_square = (random.randrange(0, 20), random.randrange(0, 16))
                         draw_mole(screen, mole_image, mole_square[0] * 32, mole_square[1] * 32)
 
 
@@ -52,13 +51,11 @@ def main():
 
 
 def draw_lines(screen):
-    # If the x value is divisible by 20, draw the line there
     j = 32
     for _ in range(20):
         pygame.draw.line(screen, "white", (j, 0), (j, HEIGHT))
         j += 32
 
-    # If the y value is divisible by 16, draw the line there
     j = 32
     for _ in range(16):
         pygame.draw.line(screen, "white", (0, j), (WIDTH, j))
